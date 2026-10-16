@@ -17,8 +17,8 @@ class MahasiswaController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'nama' => 'required',
-            'nim' => 'required|unique:mahasiswas,nim',
+            'nama' => 'required|string|max:100',
+            'nim' => 'required|string|max:20|unique:mahasiswas,nim',
             'email' => 'required|email',
         ], [
             'nim.unique' => 'NIM tersebut sudah terdaftar. Silakan gunakan NIM lain.',
