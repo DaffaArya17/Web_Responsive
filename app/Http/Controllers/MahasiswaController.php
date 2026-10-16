@@ -8,10 +8,21 @@ use App\Models\Mahasiswa;
 
 class MahasiswaController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $mahasiswa = Mahasiswa::all();
-        return view('mahasiswa.index', compact('mahasiswa'));
+        $search = $request->query('search', '');
+
+        $mahasiswa = Mahasiswa::query()
+            ->when($search !== '', function ($query) use ($search) {
+                $query->where(function ($query) use ($search) {
+                    $query->where('nama', 'like', "%{$search}%")
+                        ->orWhere('nim', 'like', "%{$search}%")
+                        ->orWhere('email', 'like', "%{$search}%");
+                });
+            })
+            ->get();
+
+        return view('mahasiswa.index', compact('mahasiswa', 'search'));
     }
 
     public function store(Request $request)

@@ -19,8 +19,8 @@
 
                 <form action="/mahasiswa" method="POST" class="space-y-5">
                     @csrf
-                    <x-form-input id="nama" name="nama" label="Nama lengkap" :value="old('nama')" placeholder="Contoh: Aisyah Putri" required />
-                    <x-form-input id="nim" name="nim" label="NIM" :value="old('nim')" placeholder="Contoh: 20240001" required />
+                    <x-form-input id="nama" name="nama" label="Nama lengkap" :value="old('nama')" placeholder="Contoh: Daffa Arya" required />
+                    <x-form-input id="nim" name="nim" label="NIM" :value="old('nim')" placeholder="Contoh: 2810011566" required />
                     <x-form-input id="email" name="email" label="Email" type="email" :value="old('email')" placeholder="nama@kampus.ac.id" required />
                     <button type="submit" class="inline-flex w-full items-center justify-center rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-200 active:bg-blue-800">Simpan data</button>
                 </form>
@@ -30,9 +30,28 @@
                 <div class="flex items-center justify-between border-b border-slate-200 px-6 py-5 sm:px-7">
                     <div>
                         <h2 class="text-lg font-semibold text-slate-950">Daftar mahasiswa</h2>
-                        <p class="mt-1 text-sm text-slate-500">{{ $mahasiswa->count() }} data terdaftar</p>
+                        <p class="mt-1 text-sm text-slate-500">{{ $mahasiswa->count() }} hasil ditemukan</p>
                     </div>
                     <span class="rounded-full bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-700">Aktif</span>
+                </div>
+                <div class="border-b border-slate-200 px-6 py-4 sm:px-7">
+                    <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-4">
+                        <label for="search" class="shrink-0 text-sm font-medium text-slate-700">Cari nama, NIM, atau email</label>
+                        <form action="/mahasiswa" method="GET" class="flex w-full flex-col gap-2 sm:flex-1 sm:flex-row">
+                        <input
+                            id="search"
+                            name="search"
+                            type="search"
+                            value="{{ $search }}"
+                            placeholder="Masukkan kata kunci..."
+                            class="min-w-0 rounded-lg border border-slate-300 px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:border-blue-500 focus:outline-none focus:ring-4 focus:ring-blue-100 sm:flex-1"
+                        >
+                        <button type="submit" class="inline-flex items-center justify-center rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-200">Cari</button>
+                        @if($search !== '')
+                            <a href="/mahasiswa" class="inline-flex items-center justify-center rounded-lg border border-slate-300 px-3 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 focus:outline-none focus:ring-4 focus:ring-slate-100">Reset</a>
+                        @endif
+                        </form>
+                    </div>
                 </div>
                 <div class="overflow-x-auto">
                     <table class="w-full min-w-[560px] text-left text-sm">
